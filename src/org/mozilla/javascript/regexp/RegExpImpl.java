@@ -442,7 +442,9 @@ public class RegExpImpl implements RegExpProxy {
                         }
                     }
                 }
-                if (num == 0) return null; /* $0 or $00 is not valid */
+                if (num == 0) {
+                    return null;
+                } /* $0 or $00 is not valid */
             }
             /* Adjust num from 1 $n-origin to 0 array-index-origin. */
             num--;
