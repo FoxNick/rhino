@@ -4,6 +4,7 @@
 
 package org.mozilla.javascript.tools.shell;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -254,7 +255,7 @@ public abstract class ShellConsole {
 
         @Override
         public String readLine() throws IOException {
-            return reader.readLine();
+            return BoundedLineReader.readLine(reader, 5_000_000);
         }
 
         @Override
@@ -263,7 +264,7 @@ public abstract class ShellConsole {
                 out.write(prompt);
                 out.flush();
             }
-            return reader.readLine();
+            return BoundedLineReader.readLine(reader, 5_000_000);
         }
 
         @Override
