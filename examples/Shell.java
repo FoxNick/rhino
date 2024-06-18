@@ -4,6 +4,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -205,7 +206,7 @@ public class Shell extends ScriptableObject {
                     // Collect lines of source to compile.
                     while (true) {
                         String newline;
-                        newline = in.readLine();
+                        newline = BoundedLineReader.readLine(in, 5_000_000);
                         if (newline == null) {
                             hitEOF = true;
                             break;
