@@ -4,6 +4,8 @@
 
 package org.mozilla.javascript.tools;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,7 +27,7 @@ public class SourceReader {
         // to interpret paths with driver letter as file, not URL.
         if (path.indexOf(':') >= 2) {
             try {
-                return new URL(path);
+                return Urls.create(path, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             } catch (MalformedURLException ex) {
                 // not a URL
             }
