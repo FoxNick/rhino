@@ -2,6 +2,7 @@ package org.mozilla.javascript.benchmarks;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Random;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
@@ -11,7 +12,7 @@ import org.mozilla.javascript.tools.shell.Global;
 import org.openjdk.jmh.annotations.*;
 
 public class ObjectBenchmark {
-    static final Random rand = new Random();
+    static final Random rand = new SecureRandom();
 
     static final int intKeys = 1000;
     static final int stringKeys = 1000;
