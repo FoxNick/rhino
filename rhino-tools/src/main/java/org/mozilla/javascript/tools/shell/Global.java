@@ -6,6 +6,7 @@
 
 package org.mozilla.javascript.tools.shell;
 
+import io.github.pixee.security.SystemCommand;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -864,9 +865,9 @@ public class Global extends ImporterTopLevel {
             throws IOException {
         Process p;
         if (environment == null) {
-            p = Runtime.getRuntime().exec(cmd, null, wd);
+            p = SystemCommand.runCommand(Runtime.getRuntime(), cmd, null, wd);
         } else {
-            p = Runtime.getRuntime().exec(cmd, environment, wd);
+            p = SystemCommand.runCommand(Runtime.getRuntime(), cmd, environment, wd);
         }
 
         try {
