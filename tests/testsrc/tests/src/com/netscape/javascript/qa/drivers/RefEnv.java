@@ -5,6 +5,7 @@
 
 package com.netscape.javascript.qa.drivers;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.*;
 import java.util.StringTokenizer;
 
@@ -168,7 +169,7 @@ public class RefEnv implements TestEnvironment {
             new String(task.getInput())));
         try {
             do {
-                line = br.readLine();
+                line = BoundedLineReader.readLine(br, 5_000_000);
                 driver.p( line );
                 
                 if (line == null) {
@@ -177,12 +178,12 @@ public class RefEnv implements TestEnvironment {
                 }
             } while (!line.equals(sizeTag));
     
-            if ((line = br.readLine()) == null) 
+            if ((line = BoundedLineReader.readLine(br, 5_000_000)) == null) 
                 return false;
             
             file.totalCases = Integer.valueOf(line).intValue();
 
-            if ((line = br.readLine()) == null) {
+            if ((line = BoundedLineReader.readLine(br, 5_000_000)) == null) {
                 driver.p("\tERROR: No lines after " + sizeTag);
                 return false;
             }
@@ -206,7 +207,7 @@ public class RefEnv implements TestEnvironment {
                         driver.p("line didn't start with " + tags[j] +":"+line);
                         return false;
                     }                    
-                    while (((line = br.readLine()) != null) && 
+                    while (((line = BoundedLineReader.readLine(br, 5_000_000)) != null) && 
                         (!(line.startsWith(startTag))))
                     {
                         values[j] = (values[j] == null) ? line : (values[j] + 
