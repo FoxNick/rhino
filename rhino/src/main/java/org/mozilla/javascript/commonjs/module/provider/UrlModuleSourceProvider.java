@@ -4,6 +4,8 @@
 
 package org.mozilla.javascript.commonjs.module.provider;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -116,7 +118,7 @@ public class UrlModuleSourceProvider extends ModuleSourceProviderBase {
 
     protected ModuleSource loadFromActualUri(URI uri, URI base, Object validator)
             throws IOException {
-        final URL url = new URL(base == null ? null : base.toURL(), uri.toString());
+        final URL url = Urls.create(base == null ? null : base.toURL(), uri.toString(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         final long request_time = System.currentTimeMillis();
         final URLConnection urlConnection = openUrlConnection(url);
         final URLValidator applicableValidator;
