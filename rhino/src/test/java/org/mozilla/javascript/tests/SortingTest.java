@@ -1,5 +1,6 @@
 package org.mozilla.javascript.tests;
 
+import java.security.SecureRandom;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
@@ -14,7 +15,7 @@ public class SortingTest {
     private static final int BIG_ARRAY = 100000;
     private static final int ITERATIONS = 1;
 
-    private static final Random rand = new Random();
+    private static final Random rand = new SecureRandom();
 
     private static Object[] bigRandom;
     private static Sorting sorter;
