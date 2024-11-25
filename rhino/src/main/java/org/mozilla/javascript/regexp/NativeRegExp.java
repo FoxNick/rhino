@@ -1903,7 +1903,9 @@ public class NativeRegExp extends IdScriptableObject {
             if (reopIsSimple(op)) {
                 int match = simpleMatch(gData, input, op, program, pc, end, true);
                 result = match >= 0;
-                if (result) pc = match; /* accept skip to next opcode */
+                if (result) {
+                    pc = match;
+                } /* accept skip to next opcode */
             } else {
                 switchStatement:
                 switch (op) {
