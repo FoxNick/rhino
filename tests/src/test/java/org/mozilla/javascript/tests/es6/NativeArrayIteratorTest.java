@@ -4,6 +4,7 @@
 
 package org.mozilla.javascript.tests.es6;
 
+import io.github.pixee.security.ObjectInputFilters;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
@@ -51,6 +52,7 @@ public class NativeArrayIteratorTest {
 
             try (ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
                     ObjectInputStream oin = new ObjectInputStream(bis)) {
+                ObjectInputFilters.enableObjectFilterIfUnprotected(oin);
                 NativeArrayIterator result = (NativeArrayIterator) oin.readObject();
                 assertEquals(0, result.getIds().length);
             }

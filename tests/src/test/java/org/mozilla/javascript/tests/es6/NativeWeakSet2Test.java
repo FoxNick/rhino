@@ -4,6 +4,7 @@
 
 package org.mozilla.javascript.tests.es6;
 
+import io.github.pixee.security.ObjectInputFilters;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
@@ -28,6 +29,7 @@ public class NativeWeakSet2Test {
 
             try (ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
                     ObjectInputStream oin = new ObjectInputStream(bis)) {
+                ObjectInputFilters.enableObjectFilterIfUnprotected(oin);
                 NativeWeakSet result = (NativeWeakSet) oin.readObject();
                 assertEquals(0, result.getIds().length);
             }

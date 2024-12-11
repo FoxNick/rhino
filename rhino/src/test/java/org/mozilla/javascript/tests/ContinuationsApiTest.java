@@ -6,6 +6,7 @@
 
 package org.mozilla.javascript.tests;
 
+import io.github.pixee.security.ObjectInputFilters;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -292,11 +293,12 @@ public class ContinuationsApiTest {
                 // deserialize
                 try (ByteArrayInputStream bais = new ByteArrayInputStream(serializedData);
                         ObjectInputStream sis = new ObjectInputStream(bais)) {
+                    ObjectInputFilters.enableObjectFilterIfUnprotected(sis);
                     globalScope = (Scriptable) sis.readObject();
                     Object continuation = sis.readObject();
                     sis.close();
-                    bais.close();
 
+                    bais.close();
                     Object result = cx.resumeContinuation(continuation, globalScope, 8);
                     assertEquals("foo", result);
                 } catch (ContinuationPending e) {
@@ -376,6 +378,7 @@ public class ContinuationsApiTest {
         ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
 
         ObjectInputStream ois = new ObjectInputStream(bais);
+        ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
 
         CharSequence r2 = (CharSequence) ois.readObject();
 
