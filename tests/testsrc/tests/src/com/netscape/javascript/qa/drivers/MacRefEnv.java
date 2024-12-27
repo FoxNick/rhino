@@ -5,6 +5,7 @@
 
 package com.netscape.javascript.qa.drivers;
 
+import io.github.pixee.security.SystemCommand;
 import java.util.Vector;
 import java.util.Date;
 import java.io.*;
@@ -76,7 +77,7 @@ public class MacRefEnv implements TestEnvironment {
                 flag.delete(); 
             }
             
-            task = Runtime.getRuntime().exec(driver.EXECUTABLE);
+            task = SystemCommand.runCommand(Runtime.getRuntime(), driver.EXECUTABLE);
             
             // wait a maximum of five minutes
             

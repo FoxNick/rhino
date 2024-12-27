@@ -4,6 +4,7 @@
 
 package com.netscape.javascript.qa.drivers;
 
+import io.github.pixee.security.SystemCommand;
 import java.io.*;
 
 /**
@@ -52,7 +53,7 @@ public class ObservedTask {
         Runtime rt = Runtime.getRuntime();
         
         try {
-            Process proc = rt.exec(commandLine);
+            Process proc = SystemCommand.runCommand(rt, commandLine);
             OutputStream os = rt.getLocalizedOutputStream(proc.getOutputStream());
             
             if ( this.observer instanceof RefEnv ) {
