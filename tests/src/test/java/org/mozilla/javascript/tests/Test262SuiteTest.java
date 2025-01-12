@@ -4,6 +4,7 @@
 
 package org.mozilla.javascript.tests;
 
+import java.nio.file.Files;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mozilla.javascript.drivers.TestUtils.JS_FILE_FILTER;
@@ -202,7 +203,7 @@ public class Test262SuiteTest {
                 Test262Case[] testCases = new Test262Case[RESULT_TRACKERS.size()];
                 RESULT_TRACKERS.keySet().toArray(testCases);
 
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter(testProperties))) {
+                try (BufferedWriter writer = Files.newBufferedWriter(testProperties.toPath())) {
                     writer.write(
                             "# This is a configuration file for Test262SuiteTest.java. See ./README.md for more info about this file\n");
 
