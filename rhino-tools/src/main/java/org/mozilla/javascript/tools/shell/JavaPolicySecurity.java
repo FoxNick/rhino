@@ -6,6 +6,8 @@
 
 package org.mozilla.javascript.tools.shell;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -145,7 +147,7 @@ public class JavaPolicySecurity extends SecurityProxy {
     private URL getUrlObj(String url) {
         URL urlObj;
         try {
-            urlObj = new URL(url);
+            urlObj = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         } catch (MalformedURLException ex) {
             // Assume as Main.processFileSecure it is file, need to build its
             // URL
@@ -155,8 +157,8 @@ public class JavaPolicySecurity extends SecurityProxy {
                 curDir = curDir + '/';
             }
             try {
-                URL curDirURL = new URL("file:" + curDir);
-                urlObj = new URL(curDirURL, url);
+                URL curDirURL = Urls.create("file:" + curDir, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
+                urlObj = Urls.create(curDirURL, url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             } catch (MalformedURLException ex2) {
                 throw new RuntimeException(
                         "Can not construct file URL for '" + url + "':" + ex2.getMessage());

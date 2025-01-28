@@ -6,6 +6,8 @@
 
 package org.mozilla.javascript.tools.shell;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -1011,7 +1013,7 @@ public class Global extends ImporterTopLevel {
         InputStream is = null;
         try {
             if (!urlIsFile) {
-                URL urlObj = new URL(filePath);
+                URL urlObj = Urls.create(filePath, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                 URLConnection uc = urlObj.openConnection();
                 is = uc.getInputStream();
                 chunkLength = uc.getContentLength();
