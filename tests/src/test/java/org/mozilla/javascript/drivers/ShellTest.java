@@ -4,6 +4,7 @@
 
 package org.mozilla.javascript.drivers;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -399,7 +400,7 @@ public class ShellTest {
                         new InputStreamReader(new ByteArrayInputStream(out.toByteArray())));
         String failures = "";
         for (; ; ) {
-            String s = r.readLine();
+            String s = BoundedLineReader.readLine(r, 5_000_000);
             if (s == null) {
                 break;
             }
@@ -487,7 +488,7 @@ public class ShellTest {
                         new InputStreamReader(new ByteArrayInputStream(out.toByteArray())));
         String failures = "";
         for (; ; ) {
-            String s = r.readLine();
+            String s = BoundedLineReader.readLine(r, 5_000_000);
             if (s == null) {
                 break;
             }

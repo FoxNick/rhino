@@ -5,6 +5,7 @@
 
 package com.netscape.javascript.qa.drivers;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.*;
 
 import java.applet.Applet;
@@ -172,11 +173,11 @@ public class LiveNavEnv extends NavEnv {
                 : File.separator ) +
                 LiveConnectTest.TEMP_LOG_NAME);
             BufferedReader br = new BufferedReader( fr );
-            String classname  = br.readLine();
-            boolean passed    = (new Boolean(br.readLine())).booleanValue();
-            int length        = (new Double(br.readLine())).intValue();
-            int no_passed     = (new Double(br.readLine())).intValue();
-            int no_failed     = (new Double(br.readLine())).intValue();
+            String classname  = BoundedLineReader.readLine(br, 5_000_000);
+            boolean passed    = (new Boolean(BoundedLineReader.readLine(br, 5_000_000))).booleanValue();
+            int length        = (new Double(BoundedLineReader.readLine(br, 5_000_000))).intValue();
+            int no_passed     = (new Double(BoundedLineReader.readLine(br, 5_000_000))).intValue();
+            int no_failed     = (new Double(BoundedLineReader.readLine(br, 5_000_000))).intValue();
             if ( ! passed ) {
                 this.file.passed = false;
                 this.suite.passed = false;

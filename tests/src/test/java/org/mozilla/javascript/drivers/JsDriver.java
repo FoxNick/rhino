@@ -4,6 +4,7 @@
 
 package org.mozilla.javascript.drivers;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -294,7 +295,7 @@ public class JsDriver {
             String line = null;
             String rv = "";
             try {
-                while ((line = r.readLine()) != null) {
+                while ((line = BoundedLineReader.readLine(r, 5_000_000)) != null) {
                     if (line.startsWith(prefix)) {
                         if (rv.length() > 0) {
                             rv += "\n";

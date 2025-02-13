@@ -6,6 +6,7 @@
 package com.netscape.javascript.qa.drivers;
 
 import com.netscape.javascript.qa.liveconnect.LiveConnectTest;
+import io.github.pixee.security.BoundedLineReader;
 import java.lang.*;
 import java.io.*;
 import java.util.Vector;
@@ -131,7 +132,7 @@ public class LiveConnectEnv implements TestEnvironment {
             new String(task.getInput())));
         try {
             do {
-                line = buf.readLine();
+                line = BoundedLineReader.readLine(buf, 5_000_000);
                 System.out.println( line );
             }  while( line != null ) ;              
         } catch ( IOException e ) {
@@ -152,12 +153,12 @@ public class LiveConnectEnv implements TestEnvironment {
                 TEMP_LOG_NAME );
                 
             BufferedReader br = new BufferedReader( fr );
-            String classname  = br.readLine();
-            boolean passed    = (new Boolean(br.readLine())).booleanValue();
-            int length        = (new Double(br.readLine())).intValue();
-            int no_passed     = (new Double(br.readLine())).intValue();
-            int no_failed     = (new Double(br.readLine())).intValue();
-            String bugnumber  = br.readLine();
+            String classname  = BoundedLineReader.readLine(br, 5_000_000);
+            boolean passed    = (new Boolean(BoundedLineReader.readLine(br, 5_000_000))).booleanValue();
+            int length        = (new Double(BoundedLineReader.readLine(br, 5_000_000))).intValue();
+            int no_passed     = (new Double(BoundedLineReader.readLine(br, 5_000_000))).intValue();
+            int no_failed     = (new Double(BoundedLineReader.readLine(br, 5_000_000))).intValue();
+            String bugnumber  = BoundedLineReader.readLine(br, 5_000_000);
             
             if ( ! passed ) {
                 this.file.passed = false;
