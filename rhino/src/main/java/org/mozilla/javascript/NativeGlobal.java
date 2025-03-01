@@ -320,7 +320,9 @@ public class NativeGlobal implements Serializable, IdFunctionCall {
             switch (s.charAt(i)) {
                 case '.':
                     if (decimal != -1) // Only allow a single decimal point.
-                    break;
+                    {
+                        break;
+                    }
                     decimal = i;
                     continue;
 

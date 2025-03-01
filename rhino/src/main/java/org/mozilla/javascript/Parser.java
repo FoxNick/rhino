@@ -2016,7 +2016,9 @@ public class Parser {
 
         ContinueStatement pn = new ContinueStatement(pos, end - pos);
         if (target != null) // can be null in error-recovery mode
-        pn.setTarget(target);
+        {
+            pn.setTarget(target);
+        }
         pn.setLabel(label);
         pn.setLineColumnNumber(lineno, column);
         return pn;
