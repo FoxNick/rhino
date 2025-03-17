@@ -4,6 +4,7 @@
 
 package org.mozilla.javascript.tests.es6;
 
+import io.github.pixee.security.ObjectInputFilters;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -308,6 +309,7 @@ public class CollectionHashtableTest {
         }
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         ObjectInputStream oin = new ObjectInputStream(bis);
+        ObjectInputFilters.enableObjectFilterIfUnprotected(oin);
         Hashtable sht = (Hashtable) oin.readObject();
         assertEquals(0, sht.size());
     }
@@ -334,6 +336,7 @@ public class CollectionHashtableTest {
         }
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         ObjectInputStream oin = new ObjectInputStream(bis);
+        ObjectInputFilters.enableObjectFilterIfUnprotected(oin);
         Hashtable sht = (Hashtable) oin.readObject();
 
         assertEquals(1, sht.getEntry("one").value());
